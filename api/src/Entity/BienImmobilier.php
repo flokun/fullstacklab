@@ -41,15 +41,10 @@ class BienImmobilier
     /**
      * @ORM\Column(type="integer")
      */
-    private $numVoie;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $codePostal;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", nullable=true, length=255)
      */
     private $commune;
 
@@ -67,11 +62,6 @@ class BienImmobilier
      * @ORM\Column(type="integer")
      */
     private $surfaceReelleBati;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $nombrePieces;
 
     /**
      * @ORM\Column(type="integer")
@@ -127,18 +117,6 @@ class BienImmobilier
     public function setValeurFonciere(float $valeurFonciere): self
     {
         $this->valeurFonciere = $valeurFonciere;
-
-        return $this;
-    }
-
-    public function getNumVoie(): ?int
-    {
-        return $this->numVoie;
-    }
-
-    public function setNumVoie(int $numVoie): self
-    {
-        $this->numVoie = $numVoie;
 
         return $this;
     }
@@ -199,18 +177,6 @@ class BienImmobilier
     public function setSurfaceReelleBati(int $surfaceReelleBati): self
     {
         $this->surfaceReelleBati = $surfaceReelleBati;
-
-        return $this;
-    }
-
-    public function getNombrePieces(): ?int
-    {
-        return $this->nombrePieces;
-    }
-
-    public function setNombrePieces(int $nombrePieces): self
-    {
-        $this->nombrePieces = $nombrePieces;
 
         return $this;
     }
