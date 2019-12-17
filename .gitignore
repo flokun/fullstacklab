@@ -4,3 +4,4 @@
 .idea/
 api/symfony.lock
 api/resources/*
+api/src/Migrations/
