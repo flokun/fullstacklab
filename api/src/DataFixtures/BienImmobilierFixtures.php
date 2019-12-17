@@ -22,7 +22,7 @@ class BienImmobilierFixtures extends Fixture
                 $numeroLigne = 0;
 
                 while (($ligne = fgets($handle)) !== false) {
-                    if ($numeroLigne > 0 & $numeroLigne < 1000) {
+                    if ($numeroLigne > 0 && $numeroLigne < 1000) {
                         $infos = explode('|', $ligne);
 
                         $bienImmobilier = new BienImmobilier();
