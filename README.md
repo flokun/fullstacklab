@@ -1,4 +1,4 @@
-# FullStack Lab [![pipeline status](https://travis-ci.org/flokun/fullstacklab.svg?branch=master)](https://travis-ci.org/flokun/fullstacklab)
+# FullStack Lab [![pipeline status](https://travis-ci.org/flokun/fullstacklab.svg?branch=master)](https://travis-ci.org/flokun/fullstacklab) [![codecov](https://codecov.io/gh/flokun/fullstacklab/branch/master/graph/badge.svg)](https://codecov.io/gh/flokun/fullstacklab)
 
 - Année : M2 IWOCS
 - Matière: WEB
