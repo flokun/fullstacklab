@@ -9,6 +9,7 @@ services:
 before_script:
   - cd api/
   - psql -c 'create database api;' -U postgres
+  - psql -c "CREATE USER api-platform WITH PASSWORD '!ChangeMe!';" -U postgres 
 
 script:
   - composer install
