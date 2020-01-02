@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { list, reset } from '../../actions/greeting/list';
+import { list, reset } from '../../actions/bienimmobilier/list';
 
 class List extends Component {
   static propTypes = {
@@ -37,7 +37,7 @@ class List extends Component {
   render() {
     return (
       <div>
-        <h1>Greeting List</h1>
+        <h1>BienImmobilier List</h1>
 
         {this.props.loading && (
           <div className="alert alert-info">Loading...</div>
@@ -61,7 +61,16 @@ class List extends Component {
           <thead>
             <tr>
               <th>id</th>
-              <th>name</th>
+              <th>numDispo</th>
+              <th>dateMutation</th>
+              <th>natureMutation</th>
+              <th>valeurFonciere</th>
+              <th>codePostal</th>
+              <th>commune</th>
+              <th>codeDepartement</th>
+              <th>codeCommune</th>
+              <th>surfaceReelleBati</th>
+              <th>surfaceTerrain</th>
               <th colSpan={2} />
             </tr>
           </thead>
@@ -74,7 +83,16 @@ class List extends Component {
                       {item['@id']}
                     </Link>
                   </th>
-                  <td>{item['name']}</td>
+                  <td>{item['numDispo']}</td>
+                  <td>{item['dateMutation']}</td>
+                  <td>{item['natureMutation']}</td>
+                  <td>{item['valeurFonciere']}</td>
+                  <td>{item['codePostal']}</td>
+                  <td>{item['commune']}</td>
+                  <td>{item['codeDepartement']}</td>
+                  <td>{item['codeCommune']}</td>
+                  <td>{item['surfaceReelleBati']}</td>
+                  <td>{item['surfaceTerrain']}</td>
                   <td>
                     <Link to={`show/${encodeURIComponent(item['@id'])}`}>
                       <span className="fa fa-search" aria-hidden="true" />
@@ -160,7 +178,7 @@ const mapStateToProps = state => {
     error,
     eventSource,
     deletedItem
-  } = state.greeting.list;
+  } = state.bienimmobilier.list;
   return { retrieved, loading, error, eventSource, deletedItem };
 };
 

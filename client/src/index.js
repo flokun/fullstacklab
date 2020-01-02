@@ -16,6 +16,7 @@ import 'font-awesome/css/font-awesome.css';
 import * as serviceWorker from './serviceWorker';
 // Import your reducers and routes here
 import Welcome from './Welcome';
+import * as BienImmobilier from './components/bienimmobilier/index';
 
 const history = createBrowserHistory();
 const store = createStore(
@@ -33,6 +34,8 @@ ReactDOM.render(
       <Switch>
         <Route path="/" component={Welcome} strict={true} exact={true}/>
         {/* Add your routes here */}
+        <Route path="/bien_immobiliers" component={BienImmobilier.Index} strict={true} exact={true}/>
+
         <Route render={() => <h1>Not Found</h1>} />
       </Switch>
     </ConnectedRouter>
