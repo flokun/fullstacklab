@@ -24,11 +24,12 @@ Détail du tp : <https://pigne.org/teaching/webdev2/lab/FullStackLab>
 
         docker-compose up -d
         
-2. Créer un dossier *resources* dans api/
+2. Créer un dossier *prod* dans api/resources/
 3. Télécharger et déplacer les fichiers .txt dans api/resources
-4. Ouvrir un terminal à la racine du projet et exécuter la commande ci-dessous
+4. Ouvrir un terminal à la racine du projet et exécuter les commandes ci-dessous
 
-        docker-compose exec php bin/console doctrine:fixtures:load
+        docker-compose exec php bin/console doctrine:schema:update --force
+        docker-compose exec php bin/console doctrine:fixtures:load --group=prod
 
 ## Tests
 

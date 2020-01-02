@@ -8,13 +8,12 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Finder\Finder;
 
-class BienImmobilierFixtures extends Fixture implements FixtureGroupInterface
+class BienImmobilierFixturesTest extends Fixture implements FixtureGroupInterface
 {
     public function load(ObjectManager $manager)
     {
-        ini_set('memory_limit', '-1');
         $finder = new Finder();
-        $finder->files()->in('resources/prod');
+        $finder->files()->in('resources/tests');
 
         foreach ($finder as $file) {
             $handle = fopen($file->getRealPath(), 'r');
@@ -23,7 +22,8 @@ class BienImmobilierFixtures extends Fixture implements FixtureGroupInterface
                 $numeroLigne = 0;
 
                 while (($ligne = fgets($handle)) !== false) {
-                    if ($numeroLigne > 0 && $numeroLigne < 1000) {
+                    if ($numeroLigne > 0) {
+
                         $infos = explode('|', $ligne);
 
                         $bienImmobilier = new BienImmobilier();
@@ -40,7 +40,7 @@ class BienImmobilierFixtures extends Fixture implements FixtureGroupInterface
 
                         $manager->persist($bienImmobilier);
                     }
-
+                    
                     $numeroLigne++;
                 }
 
@@ -59,6 +59,6 @@ class BienImmobilierFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['prod'];
+        return ['tests'];
     }
 }
