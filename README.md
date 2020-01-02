@@ -20,11 +20,15 @@ Détail du tp : <https://pigne.org/teaching/webdev2/lab/FullStackLab>
 
 ## Installation
 
-1. Créer un dossier *resources* dans api/
-2. Télécharger et déplacer les fichiers .txt dans api/resources
-3. Ouvrir un terminal à la racine du projet et exécuter la commande ci-dessous
+1. Installer les dépendances et l'environnement Docker
 
-        > docker-compose exec php bin/console doctrine:fixtures:load
+        docker-compose up -d
+        
+2. Créer un dossier *resources* dans api/
+3. Télécharger et déplacer les fichiers .txt dans api/resources
+4. Ouvrir un terminal à la racine du projet et exécuter la commande ci-dessous
+
+        docker-compose exec php bin/console doctrine:fixtures:load
 
 ## Tests
 
