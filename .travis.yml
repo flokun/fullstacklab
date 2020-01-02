@@ -3,11 +3,9 @@ language: php
 php:
   - '7.3'
 
-install:
-  - travis_retry composer install --no-interaction --no-suggest
-
 script:
-  - composer test -- --coverage-clover=coverage.xml
+  - composer install
+  - php bin/phpunit
 
 #after_success:
 #  # Submit coverage report to https://codecov.io
