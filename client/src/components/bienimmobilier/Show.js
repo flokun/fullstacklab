@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { retrieve, reset } from '../../actions/greeting/show';
-import { del } from '../../actions/greeting/delete';
+import { retrieve, reset } from '../../actions/bienimmobilier/show';
+import { del } from '../../actions/bienimmobilier/delete';
 
 class Show extends Component {
   static propTypes = {
@@ -69,8 +69,44 @@ class Show extends Component {
             </thead>
             <tbody>
               <tr>
-                <th scope="row">name</th>
-                <td>{item['name']}</td>
+                <th scope="row">numDispo</th>
+                <td>{item['numDispo']}</td>
+              </tr>
+              <tr>
+                <th scope="row">dateMutation</th>
+                <td>{item['dateMutation']}</td>
+              </tr>
+              <tr>
+                <th scope="row">natureMutation</th>
+                <td>{item['natureMutation']}</td>
+              </tr>
+              <tr>
+                <th scope="row">valeurFonciere</th>
+                <td>{item['valeurFonciere']}</td>
+              </tr>
+              <tr>
+                <th scope="row">codePostal</th>
+                <td>{item['codePostal']}</td>
+              </tr>
+              <tr>
+                <th scope="row">commune</th>
+                <td>{item['commune']}</td>
+              </tr>
+              <tr>
+                <th scope="row">codeDepartement</th>
+                <td>{item['codeDepartement']}</td>
+              </tr>
+              <tr>
+                <th scope="row">codeCommune</th>
+                <td>{item['codeCommune']}</td>
+              </tr>
+              <tr>
+                <th scope="row">surfaceReelleBati</th>
+                <td>{item['surfaceReelleBati']}</td>
+              </tr>
+              <tr>
+                <th scope="row">surfaceTerrain</th>
+                <td>{item['surfaceTerrain']}</td>
               </tr>
             </tbody>
           </table>
@@ -79,7 +115,7 @@ class Show extends Component {
           Back to list
         </Link>
         {item && (
-          <Link to={`/greetings/edit/${encodeURIComponent(item['@id'])}`}>
+          <Link to={`/bien_immobiliers/edit/${encodeURIComponent(item['@id'])}`}>
             <button className="btn btn-warning">Edit</button>
           </Link>
         )}
@@ -106,13 +142,13 @@ class Show extends Component {
 }
 
 const mapStateToProps = state => ({
-  retrieved: state.greeting.show.retrieved,
-  error: state.greeting.show.error,
-  loading: state.greeting.show.loading,
-  eventSource: state.greeting.show.eventSource,
-  deleteError: state.greeting.del.error,
-  deleteLoading: state.greeting.del.loading,
-  deleted: state.greeting.del.deleted
+  retrieved: state.bienimmobilier.show.retrieved,
+  error: state.bienimmobilier.show.error,
+  loading: state.bienimmobilier.show.loading,
+  eventSource: state.bienimmobilier.show.eventSource,
+  deleteError: state.bienimmobilier.del.error,
+  deleteLoading: state.bienimmobilier.del.loading,
+  deleted: state.bienimmobilier.del.deleted
 });
 
 const mapDispatchToProps = dispatch => ({
