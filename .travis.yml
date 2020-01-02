@@ -1,0 +1,11 @@
+dist: xenial
+language: php
+php:
+  - '7.3'
+
+#jobs:
+#  include:
+#    - language: node_js
+#      node_js: 12
+#      script:
+#        - #TODO
