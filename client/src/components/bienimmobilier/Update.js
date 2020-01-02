@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Form from './Form';
-import { retrieve, update, reset } from '../../actions/greeting/update';
-import { del } from '../../actions/greeting/delete';
+import { retrieve, update, reset } from '../../actions/bienimmobilier/update';
+import { del } from '../../actions/bienimmobilier/delete';
 
 class Update extends Component {
   static propTypes = {
@@ -100,17 +100,17 @@ class Update extends Component {
 }
 
 const mapStateToProps = state => ({
-  retrieved: state.greeting.update.retrieved,
-  retrieveError: state.greeting.update.retrieveError,
-  retrieveLoading: state.greeting.update.retrieveLoading,
-  updateError: state.greeting.update.updateError,
-  updateLoading: state.greeting.update.updateLoading,
-  deleteError: state.greeting.del.error,
-  deleteLoading: state.greeting.del.loading,
-  eventSource: state.greeting.update.eventSource,
-  created: state.greeting.create.created,
-  deleted: state.greeting.del.deleted,
-  updated: state.greeting.update.updated
+  retrieved: state.bienimmobilier.update.retrieved,
+  retrieveError: state.bienimmobilier.update.retrieveError,
+  retrieveLoading: state.bienimmobilier.update.retrieveLoading,
+  updateError: state.bienimmobilier.update.updateError,
+  updateLoading: state.bienimmobilier.update.updateLoading,
+  deleteError: state.bienimmobilier.del.error,
+  deleteLoading: state.bienimmobilier.del.loading,
+  eventSource: state.bienimmobilier.update.eventSource,
+  created: state.bienimmobilier.create.created,
+  deleted: state.bienimmobilier.del.deleted,
+  updated: state.bienimmobilier.update.updated
 });
 
 const mapDispatchToProps = dispatch => ({

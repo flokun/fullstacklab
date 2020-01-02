@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Form from './Form';
-import { create, reset } from '../../actions/greeting/create';
+import { create, reset } from '../../actions/bienimmobilier/create';
 
 class Create extends Component {
   static propTypes = {
@@ -28,7 +28,7 @@ class Create extends Component {
 
     return (
       <div>
-        <h1>New Greeting</h1>
+        <h1>New BienImmobilier</h1>
 
         {this.props.loading && (
           <div className="alert alert-info" role="status">
@@ -52,7 +52,7 @@ class Create extends Component {
 }
 
 const mapStateToProps = state => {
-  const { created, error, loading } = state.greeting.create;
+  const { created, error, loading } = state.bienimmobilier.create;
   return { created, error, loading };
 };
 
