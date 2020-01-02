@@ -3,6 +3,16 @@ language: php
 php:
   - '7.3'
 
+install:
+  - travis_retry composer install --no-interaction --no-suggest
+
+script:
+  - composer test -- --coverage-clover=coverage.xml
+
+#after_success:
+#  # Submit coverage report to https://codecov.io
+#  - bash <(curl -s https://codecov.io/bash)
+
 #jobs:
 #  include:
 #    - language: node_js
