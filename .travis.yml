@@ -3,14 +3,21 @@ language: php
 php:
   - '7.3'
 
+services: postgresql
+
 before_script: cd api/
 
 script:
   - composer install
+  - php bin/console doctrine:schema:update --force
+  - php bin/console doctrine:fixtures:load --append
   - php bin/phpunit --coverage-clover=coverage.xml
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+    
+    
+    
 #jobs:
 #  include:
 #    - language: node_js
