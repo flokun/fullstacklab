@@ -6,9 +6,6 @@ php:
 services:
   - postgresql
 
-env:
-  - DB=api
-
 before_script: cd api/
 
 script:
