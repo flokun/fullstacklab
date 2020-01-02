@@ -12,7 +12,6 @@ before_script:
 
 script:
   - composer install
-  - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:update --force --env=test
   - php bin/console doctrine:fixtures:load --append --group=tests --env=test
   - php bin/phpunit --coverage-clover=coverage.xml

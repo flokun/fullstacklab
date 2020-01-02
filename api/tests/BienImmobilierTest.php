@@ -27,7 +27,7 @@ class BienImmobilierTest extends KernelTestCase
             ->getManager();
     }
 
-    public function getAllBienImmobilier() {
+    public function testGetAllBienImmobilier() {
         $biensImmobilier = $this->entityManager->getRepository(BienImmobilier::class)->findAll();
         $this->assertGreaterThan(1, $biensImmobilier);
     }
