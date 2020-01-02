@@ -6,10 +6,9 @@ php:
 services:
   - postgresql
 
-addons:
-  postgresql: "12"
-  
-before_script: cd api/
+before_script:
+  - cd api/
+  - psql -c 'create database api;' -U postgres
 
 script:
   - composer install
