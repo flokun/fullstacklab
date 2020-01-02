@@ -1,0 +1,21 @@
+dist: xenial
+language: php
+php:
+  - '7.3'
+
+before_script: cd api/
+
+script:
+  - composer install
+  - php bin/phpunit
+
+#after_success:
+#  # Submit coverage report to https://codecov.io
+#  - bash <(curl -s https://codecov.io/bash)
+
+#jobs:
+#  include:
+#    - language: node_js
+#      node_js: 12
+#      script:
+#        - #TODO
