@@ -7,12 +7,10 @@ before_script: cd api/
 
 script:
   - composer install
-  - php bin/phpunit
+  - php bin/phpunit --coverage-clover=coverage.xml
 
-#after_success:
-#  # Submit coverage report to https://codecov.io
-#  - bash <(curl -s https://codecov.io/bash)
-
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 #jobs:
 #  include:
 #    - language: node_js
