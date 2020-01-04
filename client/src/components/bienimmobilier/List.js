@@ -36,41 +36,35 @@ class List extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h1>BienImmobilier List</h1>
 
         {this.props.loading && (
-          <div className="alert alert-info">Loading...</div>
+          <div className="alert alert-info">Chargement...</div>
         )}
         {this.props.deletedItem && (
           <div className="alert alert-success">
-            {this.props.deletedItem['@id']} deleted.
+            {this.props.deletedItem['@id']} supprimé.
           </div>
         )}
         {this.props.error && (
           <div className="alert alert-danger">{this.props.error}</div>
         )}
 
-        <p>
-          <Link to="create" className="btn btn-primary">
-            Create
-          </Link>
-        </p>
-
         <table className="table table-responsive table-striped table-hover">
           <thead>
             <tr>
-              <th>id</th>
-              <th>numDispo</th>
-              <th>dateMutation</th>
-              <th>natureMutation</th>
-              <th>valeurFonciere</th>
-              <th>codePostal</th>
-              <th>commune</th>
-              <th>codeDepartement</th>
-              <th>codeCommune</th>
-              <th>surfaceReelleBati</th>
-              <th>surfaceTerrain</th>
+              <th>ID</th>
+              <th>N° de disposition</th>
+              <th>Date de mutation</th>
+              <th>Nature de la mutation</th>
+              <th>Valeur foncière</th>
+              <th>Code postal</th>
+              <th>Commune</th>
+              <th>Code département</th>
+              <th>Code commune</th>
+              <th>Surface réelle bâti</th>
+              <th>Surface terrain</th>
               <th colSpan={2} />
             </tr>
           </thead>
@@ -80,7 +74,7 @@ class List extends Component {
                 <tr key={item['@id']}>
                   <th scope="row">
                     <Link to={`show/${encodeURIComponent(item['@id'])}`}>
-                      {item['@id']}
+                      {item.id}
                     </Link>
                   </th>
                   <td>{item['numDispo']}</td>
