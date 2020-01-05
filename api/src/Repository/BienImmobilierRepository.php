@@ -19,32 +19,24 @@ class BienImmobilierRepository extends ServiceEntityRepository
         parent::__construct($registry, BienImmobilier::class);
     }
 
-    // /**
-    //  * @return BienImmobilier[] Returns an array of BienImmobilier objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    public function getSalesByDepartment(int $year) {
+        try {
+            $from = new \DateTime($year . '-01-01 00:00:00');
+            $to = new \DateTime($year . '-12-31 23:59:59');
 
-    /*
-    public function findOneBySomeField($value): ?BienImmobilier
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            $query = $this->createQueryBuilder('b')
+                ->select('b.codeDepartement, count(b.codeDepartement) AS nombre_ventes')
+                ->andWhere('b.dateMutation BETWEEN :from AND :to')
+                ->setParameter('from', $from)
+                ->setParameter('to', $to)
+                ->groupBy('b.codeDepartement');
+
+            $result = $query->getQuery()->getResult();
+
+
+            return $result;
+        } catch (\Exception $e) {
+            dd($e);
+        }
     }
-    */
 }

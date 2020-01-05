@@ -334,6 +334,9 @@
     "symfony/options-resolver": {
         "version": "v4.3.8"
     },
+    "symfony/orm-pack": {
+        "version": "v1.0.7"
+    },
     "symfony/phpunit-bridge": {
         "version": "4.3",
         "recipe": {
@@ -486,6 +489,9 @@
     },
     "webmozart/assert": {
         "version": "1.6.0"
+    },
+    "webonyx/graphql-php": {
+        "version": "v0.13.8"
     },
     "willdurand/negotiation": {
         "version": "v2.3.1"
