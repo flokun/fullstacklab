@@ -44,7 +44,7 @@ class BienImmobilierFixtures extends Fixture implements FixtureGroupInterface
                         $manager->persist($bienImmobilier);
 
                         if ($numeroLigne % 25 == 0) {
-                            echo $numeroLigne . "\n";
+                            //echo $numeroLigne . "\n";
                             $manager->flush();
                             $manager->clear();
                         }
