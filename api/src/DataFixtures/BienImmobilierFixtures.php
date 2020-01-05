@@ -13,6 +13,9 @@ class BienImmobilierFixtures extends Fixture implements FixtureGroupInterface
     public function load(ObjectManager $manager)
     {
         ini_set('memory_limit', '-1');
+
+        $manager->getConnection()->getConfiguration()->setSQLLogger(null);
+
         $finder = new Finder();
         $finder->files()->in('resources/prod');
 
@@ -23,7 +26,7 @@ class BienImmobilierFixtures extends Fixture implements FixtureGroupInterface
                 $numeroLigne = 0;
 
                 while (($ligne = fgets($handle)) !== false) {
-                    if ($numeroLigne > 0 && $numeroLigne < 1000) {
+                    if ($numeroLigne > 0) {
                         $infos = explode('|', $ligne);
 
                         $bienImmobilier = new BienImmobilier();
@@ -39,6 +42,12 @@ class BienImmobilierFixtures extends Fixture implements FixtureGroupInterface
                             ->setSurfaceTerrain((int)$infos[42]);
 
                         $manager->persist($bienImmobilier);
+
+                        if ($numeroLigne % 25 == 0) {
+                            echo $numeroLigne . "\n";
+                            $manager->flush();
+                            $manager->clear();
+                        }
                     }
 
                     $numeroLigne++;
@@ -46,6 +55,8 @@ class BienImmobilierFixtures extends Fixture implements FixtureGroupInterface
 
                 fclose($handle);
             }
+
+            break;
         }
 
         $manager->flush();

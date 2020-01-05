@@ -31,7 +31,10 @@ Détail du tp : <https://pigne.org/teaching/webdev2/lab/FullStackLab>
         docker-compose exec php bin/console doctrine:schema:update --force
         docker-compose exec php bin/console doctrine:fixtures:load --group=prod
 
-5. Rendez-vous sur https://localhost/bien_immobiliers ou bien https://localhost
+5. Rendez-vous sur :
+    - https://localhost
+    - https://localhost/bien_immobiliers/
+    - https://localhost/graphiques/circulaire
 
 ## Tests
 
