@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
+import Navbar from "../../navbar";
 
 const Circulaire = () => {
   const [annee, setAnnee] = useState(2016);
@@ -27,7 +28,7 @@ const Circulaire = () => {
       });
   };
 
-  const handleChangeAnee = e => {
+  const handleChangeAnnee = e => {
     //Supprime l'ancien svg si il y en a un
     let lastSvg = document.querySelector('svg');
 
@@ -35,15 +36,16 @@ const Circulaire = () => {
       lastSvg.parentNode.removeChild(lastSvg);
     }
 
-    setAnnee(e.target.value);
-    setSales({});
+    if (!loading) {
+      setAnnee(e.target.value);
+      setSales({});
+    }
   };
 
-  //TODO: à améliorer pour le centrage des divs, les noms qui sont superposés par moment et ajouter des couleurs
   const renderGraphique = () => {
     let width = 1000;
-    let height = 500;
-    let margin = 60;
+    let height = 600;
+    let margin = 100;
 
     //The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
     let radius = Math.min(width, height) / 2 - margin;
@@ -62,13 +64,13 @@ const Circulaire = () => {
     //set the color scale
     let color = d3.scaleOrdinal()
       .domain(Object.keys(sales));
-    //.range(d3.schemeDark2);
+      //.range(d3.scaleOrdinal("schemeCategory20b"));
 
     //Compute the position of each group on the pie:
     let pie = d3.pie()
       .sort(null) // Do not sort group by size
       .value(function (d) {
-        return d.value;
+        return d.value.value;
       });
     let data_ready = pie(d3.entries(data));
 
@@ -90,13 +92,14 @@ const Circulaire = () => {
       .append('path')
       .attr('d', arc)
       .attr('fill', function (d) {
-        return (color(d.data.key))
+        return d.data.value.color;
       })
       .attr("stroke", "white")
       .style("stroke-width", "2px")
       .style("opacity", 0.7);
 
     //Add the polylines between chart and labels:
+    let sep = 20;
     svg
       .selectAll('allPolylines')
       .data(data_ready)
@@ -111,23 +114,35 @@ const Circulaire = () => {
         let posC = outerArc.centroid(d); // Label position = almost the same as posB
         let midangle = d.startAngle + (d.endAngle - d.startAngle) / 2; // we need the angle to see if the X position will be at the extreme right or extreme left
         posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+
+        if (d.data.value.value < 1) {
+          posC[1] -= sep;
+          sep += 20;
+        }
+
         return [posA, posB, posC]
       });
 
     //Add the polylines between chart and labels:
+    sep = 20;
     svg
       .selectAll('allLabels')
       .data(data_ready)
       .enter()
       .append('text')
       .text(function (d) {
-        //console.log(d.data.key);
-        return d.data.key + "(" + d.data.value + " %)";
+        return d.data.key + " (" + d.data.value.value + " %)";
       })
       .attr('transform', function (d) {
         let pos = outerArc.centroid(d);
         let midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
         pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+
+        if (d.data.value.value < 1) {
+          pos[1] -= sep;
+          sep += 20;
+        }
+
         return 'translate(' + pos + ')';
       })
       .style('text-anchor', function (d) {
@@ -142,18 +157,23 @@ const Circulaire = () => {
   }, [annee]);
 
   return (
-    <div className="container">
-      {loading && <h1>Chargement....</h1>}
+    <div>
+      <Navbar />
 
-      {!loading && erreur === '' && Object.entries(sales).length > 0 && renderGraphique()}
+      <div className="container">
 
-      <h1>Année : {annee}</h1>
+        {loading && <div className="mt-2 alert alert-info">Chargement...</div>}
 
-      <input type="number" min="2015" max="2019" defaultValue="2016" onChange={handleChangeAnee} disabled={loading}/>
+        {!loading && erreur === '' && Object.entries(sales).length > 0 && renderGraphique()}
 
-      {!loading && Object.entries(sales).length === 0 && erreur === '' && <p>Pas de données disponible pour cette date.</p> }
+        <h3>Année : {annee}</h3>
 
-      {!loading && erreur !== '' && <h3>{erreur}</h3>}
+        <input type="number" className="form-control" min="2015" max="2019" defaultValue="2016" onChange={handleChangeAnnee} />
+
+        {!loading && Object.entries(sales).length === 0 && erreur === '' && <p>Pas de données disponible pour cette date.</p> }
+
+        {!loading && erreur !== '' && <h5 className="text-danger">{erreur}</h5>}
+      </div>
     </div>
   );
 };

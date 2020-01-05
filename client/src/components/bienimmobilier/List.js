@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { list, reset } from '../../actions/bienimmobilier/list';
+import {list, reset} from '../../actions/bienimmobilier/list';
+import Navbar from "../navbar";
 
 class List extends Component {
   static propTypes = {
@@ -18,7 +19,7 @@ class List extends Component {
   componentDidMount() {
     this.props.list(
       this.props.match.params.page &&
-        decodeURIComponent(this.props.match.params.page)
+      decodeURIComponent(this.props.match.params.page)
     );
   }
 
@@ -26,7 +27,7 @@ class List extends Component {
     if (this.props.match.params.page !== nextProps.match.params.page)
       nextProps.list(
         nextProps.match.params.page &&
-          decodeURIComponent(nextProps.match.params.page)
+        decodeURIComponent(nextProps.match.params.page)
       );
   }
 
@@ -36,23 +37,26 @@ class List extends Component {
 
   render() {
     return (
-      <div className="container">
-        <h1>BienImmobilier List</h1>
+      <div>
+        <Navbar/>
 
-        {this.props.loading && (
-          <div className="alert alert-info">Chargement...</div>
-        )}
-        {this.props.deletedItem && (
-          <div className="alert alert-success">
-            {this.props.deletedItem['@id']} supprimé.
-          </div>
-        )}
-        {this.props.error && (
-          <div className="alert alert-danger">{this.props.error}</div>
-        )}
+        <div className="container">
+          <h1 className="text-center">Liste des biens immobilier</h1>
 
-        <table className="table table-responsive table-striped table-hover">
-          <thead>
+          {this.props.loading && (
+            <div className="alert alert-info">Chargement...</div>
+          )}
+          {this.props.deletedItem && (
+            <div className="alert alert-success">
+              {this.props.deletedItem['@id']} supprimé.
+            </div>
+          )}
+          {this.props.error && (
+            <div className="alert alert-danger">{this.props.error}</div>
+          )}
+
+          <table className="table table-responsive table-striped table-hover">
+            <thead>
             <tr>
               <th>ID</th>
               <th>N° de disposition</th>
@@ -65,46 +69,47 @@ class List extends Component {
               <th>Code commune</th>
               <th>Surface réelle bâti</th>
               <th>Surface terrain</th>
-              <th colSpan={2} />
+              <th colSpan={2}/>
             </tr>
-          </thead>
-          <tbody>
+            </thead>
+            <tbody>
             {this.props.retrieved &&
-              this.props.retrieved['hydra:member'].map(item => (
-                <tr key={item['@id']}>
-                  <th scope="row">
-                    <Link to={`show/${encodeURIComponent(item['@id'])}`}>
-                      {item.id}
-                    </Link>
-                  </th>
-                  <td>{item['numDispo']}</td>
-                  <td>{item['dateMutation']}</td>
-                  <td>{item['natureMutation']}</td>
-                  <td>{item['valeurFonciere']}</td>
-                  <td>{item['codePostal']}</td>
-                  <td>{item['commune']}</td>
-                  <td>{item['codeDepartement']}</td>
-                  <td>{item['codeCommune']}</td>
-                  <td>{item['surfaceReelleBati']}</td>
-                  <td>{item['surfaceTerrain']}</td>
-                  <td>
-                    <Link to={`show/${encodeURIComponent(item['@id'])}`}>
-                      <span className="fa fa-search" aria-hidden="true" />
-                      <span className="sr-only">Show</span>
-                    </Link>
-                  </td>
-                  <td>
-                    <Link to={`edit/${encodeURIComponent(item['@id'])}`}>
-                      <span className="fa fa-pencil" aria-hidden="true" />
-                      <span className="sr-only">Edit</span>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+            this.props.retrieved['hydra:member'].map(item => (
+              <tr key={item['@id']}>
+                <th scope="row">
+                  <Link to={`show/${encodeURIComponent(item['@id'])}`}>
+                    {item.id}
+                  </Link>
+                </th>
+                <td>{item['numDispo']}</td>
+                <td>{item['dateMutation']}</td>
+                <td>{item['natureMutation']}</td>
+                <td>{item['valeurFonciere']}</td>
+                <td>{item['codePostal']}</td>
+                <td>{item['commune']}</td>
+                <td>{item['codeDepartement']}</td>
+                <td>{item['codeCommune']}</td>
+                <td>{item['surfaceReelleBati']}</td>
+                <td>{item['surfaceTerrain']}</td>
+                <td>
+                  <Link to={`show/${encodeURIComponent(item['@id'])}`}>
+                    <span className="fa fa-search" aria-hidden="true"/>
+                    <span className="sr-only">Show</span>
+                  </Link>
+                </td>
+                <td>
+                  <Link to={`edit/${encodeURIComponent(item['@id'])}`}>
+                    <span className="fa fa-pencil" aria-hidden="true"/>
+                    <span className="sr-only">Edit</span>
+                  </Link>
+                </td>
+              </tr>
+            ))}
+            </tbody>
+          </table>
 
-        {this.pagination()}
+          {this.pagination()}
+        </div>
       </div>
     );
   }
@@ -173,7 +178,7 @@ const mapStateToProps = state => {
     eventSource,
     deletedItem
   } = state.bienimmobilier.list;
-  return { retrieved, loading, error, eventSource, deletedItem };
+  return {retrieved, loading, error, eventSource, deletedItem};
 };
 
 const mapDispatchToProps = dispatch => ({
