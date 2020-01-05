@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "connected-react-router": "^5.0.1",
+    "d3": "4.13.0",
     "font-awesome": "^4.7.0",
     "jest-junit": "^5.2.0",
     "lodash.get": "^4.4.2",

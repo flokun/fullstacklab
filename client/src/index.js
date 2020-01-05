@@ -21,6 +21,7 @@ import bienimmobilier from './reducers/bienimmobilier/';
 // Routes
 import Welcome from './Welcome';
 import bienimmobilierRoutes from './routes/bienimmobilier';
+import graphiquesRoutes from './routes/graphiques';
 
 const history = createBrowserHistory();
 const store = createStore(
@@ -37,6 +38,7 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <Switch>
         {bienimmobilierRoutes}
+        {graphiquesRoutes}
         <Route path="/" component={Welcome} strict={true} exact={true}/>
         <Route render={() => <h1>Not Found</h1>}/>
       </Switch>
