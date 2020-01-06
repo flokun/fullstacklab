@@ -147,32 +147,27 @@ class BienImmobilierController extends AbstractController
     /**
      * Diagramme linéaire - Récupère le prix au mètre carré des ventes par mois
      * @Route(
-     *     path="/bien_immobiliers/priceByMonthYear/{type}",
+     *     path="/bien_immobiliers/priceByMonthYear/",
      *     name="prix_metre_carre",
      *     methods={"GET"},
      * )
      * @param Request $request
-     * @param int $type
      * @return Response
      */
-    public function getPriceMetrePow(Request $request, int $type)
+    public function getPriceMetrePow(Request $request)
     {
-
-        if ($type !== 1 && $type !== 2) {
-            return new JsonResponse("Le type de bien doit être appartement ou maison", 400);
-        }
-
         //Récupère les prix des bien
 
         $prixMoy = [];
-        for($i = 0; $i<5; $i++){
-            for($j = 1; $j<13; $j++){
-                $PrixBien= $this->bienImmobilierRepository->getPriceByMonthYear(2015+$i, $j, $type);
-                if ($PrixBien[0][2] > 0)
-                    array_push($prixMoy, $PrixBien[0][1]/$PrixBien[0][2]);
-                else
-                    array_push($prixMoy, 0);
-            }
+        $cpt = 0;
+
+        $PrixBien= $this->bienImmobilierRepository->getPriceByMonthYear();
+        for($i = 0; $i<count($PrixBien); $i+=2){
+            $prixMoy[$cpt] = [];
+            $prixMoy[$cpt]["time"] = $cpt+1;
+            $prixMoy[$cpt]["Maison"] = $PrixBien[$i]["sum"] / $PrixBien[$i]["count"];
+            $prixMoy[$cpt]["Appartement"] = $PrixBien[$i+1]["sum"] / $PrixBien[$i+1]["count"];
+            $cpt++;
         }
 
         return new JsonResponse($prixMoy, 200);

@@ -40,23 +40,20 @@ class BienImmobilierRepository extends ServiceEntityRepository
         }
     }
 
-    public function getPriceByMonthYear(int $year, int $month, int $typeBien) {
-        try {
-            $from = new \DateTime($year . '-'.$month.'-01 00:00:00');
-            $to = new \DateTime($year . '-'.$month.'-31 23:59:59');
+    public function getPriceByMonthYear() {
 
-            $query = $this->createQueryBuilder('b')
-                ->select('sum(b.valeurFonciere / b.surfaceReelleBati), count(b)')
-                ->andWhere('b.surfaceReelleBati > 0 and b.typeBien = ' . $typeBien .' AND b.dateMutation BETWEEN :from AND :to')
-                ->setParameter('from', $from)
-                ->setParameter('to', $to);
-
-            $result = $query->getQuery()->getResult();
-
-
-            return $result;
-        } catch (\Exception $e) {
-            dd($e);
-        }
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+        select sum(valeur_fonciere / surface_reelle_bati), count(*), type_bien
+        from
+             bien_immobilier
+        where surface_reelle_bati > 0
+        and type_bien in (1, 2)
+        group by date_trunc( \'year\', date_mutation ), date_trunc( \'month\', date_mutation ), type_bien;
+        ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
     }
 }
