@@ -97,7 +97,7 @@ class List extends Component {
                     <td>{item['surfaceTerrain']}</td>
                     <td>
                       <Link to={`show/${encodeURIComponent(item['@id'])}`}>
-                        <span className="fa fa-search" aria-hidden="true"/>
+                        <span className="fa fa-search fa-3x" aria-hidden="true"/>
                         <span className="sr-only">Show</span>
                       </Link>
                     </td>
@@ -126,32 +126,32 @@ class List extends Component {
     } = view;
 
     return (
-      <div className="centrerPagin">
-      <nav aria-label="Page navigation">
-        <Link
-          to="."
-          className={`btn btn-primary btn-arrow-left${previous ? '' : ' disabled'}`}
-        >Premier
-        </Link>
-        <Link
-          to={
-            !previous || previous === first ? '.' : encodeURIComponent(previous)
-          }
-          className={`btn btn-info btn-arrow-left${previous ? '' : ' disabled'}`}
-        >Précédent
-        </Link>
-        <button type="button" className="btn btn-link"><a href={"https://localhost/bien_immobiliers/"}>Retour en Haut</a></button>
-        <Link
-          to={next ? encodeURIComponent(next) : '#'}
-          className={`btn btn-info btn-arrow-right${next ? '' : ' disabled'}`}
-        >Suivant
-        </Link>
-        <Link
-          to={last ? encodeURIComponent(last) : '#'}
-          className={`btn btn-primary btn-arrow-right${next ? '' : ' disabled'}`}
-        >Dernier
-        </Link>
-      </nav>
+      <div className="centrer">
+        <nav aria-label="Page navigation">
+          <Link
+            to="."
+            className={`btn btn-primary btn-arrow-left${previous ? '' : ' disabled'}`}
+          >Premier
+          </Link>
+          <Link
+            to={
+              !previous || previous === first ? '.' : encodeURIComponent(previous)
+            }
+            className={`btn btn-info btn-arrow-left${previous ? '' : ' disabled'}`}
+          >Précédent
+          </Link>
+          <button type="button" className="btn btn-link"><a href={"https://localhost/bien_immobiliers/"}>Retour en Haut</a></button>
+          <Link
+            to={next ? encodeURIComponent(next) : '#'}
+            className={`btn btn-info btn-arrow-right${next ? '' : ' disabled'}`}
+          >Suivant
+          </Link>
+          <Link
+            to={last ? encodeURIComponent(last) : '#'}
+            className={`btn btn-primary btn-arrow-right${next ? '' : ' disabled'}`}
+          >Dernier
+          </Link>
+        </nav>
       </div>
     );
   }

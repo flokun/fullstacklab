@@ -165,8 +165,9 @@ const Circulaire = () => {
         {loading && <div className="mt-2 alert alert-info">Chargement...</div>}
 
         {!loading && erreur === '' && Object.entries(sales).length > 0 && renderGraphique()}
-
+        <br/>
         <h3>Année : {annee}</h3>
+        <br/>
 
         <input type="number" className="form-control" min="2015" max="2019" defaultValue="2016" onChange={handleChangeAnnee} />
 
