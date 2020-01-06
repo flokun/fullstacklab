@@ -28,7 +28,7 @@ class BienImmobilierFixturesTest extends Fixture implements FixtureGroupInterfac
 
                         $bienImmobilier = new BienImmobilier();
 
-                        $bienImmobilier->setNumDispo((int)$infos[7])
+                        $bienImmobilier->setNumDispo((int)$infos[8])
                             ->setDateMutation(\DateTime::createFromFormat('d/m/Y', $infos[8])) //L'heure dans la date correspond à la date d'insertion dans la bdd
                             ->setNatureMutation($infos[9])
                             ->setValeurFonciere((float)$infos[10])
@@ -36,11 +36,12 @@ class BienImmobilierFixturesTest extends Fixture implements FixtureGroupInterfac
                             ->setCodeDepartement((int)$infos[18])
                             ->setCodeCommune($infos[19])
                             ->setSurfaceReelleBati((int)$infos[38])
-                            ->setSurfaceTerrain((int)$infos[42]);
+                            ->setSurfaceTerrain((int)$infos[42])
+                            ->setTypeBien((int)$infos[36]);
 
                         $manager->persist($bienImmobilier);
                     }
-                    
+
                     $numeroLigne++;
                 }
 
