@@ -44,7 +44,7 @@ class BienImmobilierRepository extends ServiceEntityRepository
 
         $conn = $this->getEntityManager()->getConnection();
         $sql = '
-        select sum(valeur_fonciere / surface_reelle_bati), count(*), type_bien
+        select date_trunc( \'month\', date_mutation ) as date, sum(valeur_fonciere / surface_reelle_bati), count(*), type_bien
         from
              bien_immobilier
         where surface_reelle_bati > 0

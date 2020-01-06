@@ -47,7 +47,7 @@ const Lineaire = () => {
     var margin = {top: 10, right: 100, bottom: 30, left: 30},
       width = 460 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
-
+    const parseTime = d3.timeFormat("%Y-%m-%d %H:%M:%S");
 // append the svg object to the body of the page
     var svg = d3.select("body")
       .append("svg")
@@ -58,9 +58,16 @@ const Lineaire = () => {
         "translate(" + margin.left + "," + margin.top + ")");
 
 //Read the data
-    d3.json(process.env.REACT_APP_API_ENTRYPOINT + '/bien_immobiliers/priceByMonthYear/' + typeBien, function(data) {
+    d3.json(process.env.REACT_APP_API_ENTRYPOINT + '/bien_immobiliers/priceByMonthYear/', function(data) {
       // List of groups (here I have one group per column)
       var allGroup = ["Maison", "Appartement"];
+
+      console.log(data[0].time);
+      data.forEach(function(d) {
+        d.time = parseTime(new Date(d.time));
+      });
+
+      console.log(data[0].time);
 
       // add the options to the button
       d3.select("#selectButton")
@@ -72,8 +79,8 @@ const Lineaire = () => {
         .attr("value", function (d) { return d; }); // corresponding value returned by the button
 
       // Add X axis --> it is a date format
-      var x = d3.scaleLinear()
-        .domain([0,5])
+      var x = d3.scaleTime()
+        .domain(d3.extent(data, function(d) { return d.time; }))
         .range([ 0, width ]);
       svg.append("g")
         .attr("transform", "translate(0," + height + ")")
@@ -92,24 +99,12 @@ const Lineaire = () => {
         .append("path")
         .datum(data)
         .attr("d", d3.line()
-          .x(function(d) { console.log(d);return x(+d.time) })
-          .y(function(d) { return y(+d.valueA) })
+          .x(function(d) { return x(+d.time) })
+          .y(function(d) { return y(+d.Maison) })
         )
         .attr("stroke", "black")
         .style("stroke-width", 4)
         .style("fill", "none");
-
-      // Initialize dots with group a
-      var dot = svg
-        .selectAll('circle')
-        .data(data)
-        .enter()
-        .append('circle')
-        .attr("cx", function(d) { return x(+d.time) })
-        .attr("cy", function(d) { return y(+d.valueA) })
-        .attr("r", 7)
-        .style("fill", "#69b3a2");
-
 
       // A function that update the chart
       function update(selectedGroup) {
@@ -126,12 +121,6 @@ const Lineaire = () => {
             .x(function(d) { return x(+d.time) })
             .y(function(d) { return y(+d.value) })
           );
-        dot
-          .data(dataFilter)
-          .transition()
-          .duration(1000)
-          .attr("cx", function(d) { return x(+d.time) })
-          .attr("cy", function(d) { return y(+d.value) })
       }
 
       // When the button is changed, run the updateChart function
@@ -155,6 +144,7 @@ const Lineaire = () => {
       <Navbar />
 
       <div className="container">
+        <select id="selectButton"></select>
         {renderGraphique()}
       </div>
     </div>

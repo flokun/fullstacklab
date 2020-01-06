@@ -164,9 +164,9 @@ class BienImmobilierController extends AbstractController
         $PrixBien= $this->bienImmobilierRepository->getPriceByMonthYear();
         for($i = 0; $i<count($PrixBien); $i+=2){
             $prixMoy[$cpt] = [];
-            $prixMoy[$cpt]["time"] = $cpt+1;
-            $prixMoy[$cpt]["Maison"] = $PrixBien[$i]["sum"] / $PrixBien[$i]["count"];
-            $prixMoy[$cpt]["Appartement"] = $PrixBien[$i+1]["sum"] / $PrixBien[$i+1]["count"];
+            $prixMoy[$cpt]["time"] = $PrixBien[$i]["date"];
+            $prixMoy[$cpt]["Maison"] = ($PrixBien[$i]["sum"] / $PrixBien[$i]["count"])/1000;
+            $prixMoy[$cpt]["Appartement"] = ($PrixBien[$i+1]["sum"] / $PrixBien[$i+1]["count"])/1000;
             $cpt++;
         }
 
