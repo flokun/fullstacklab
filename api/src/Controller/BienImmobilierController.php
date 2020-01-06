@@ -147,23 +147,35 @@ class BienImmobilierController extends AbstractController
     /**
      * Diagramme linéaire - Récupère le prix au mètre carré des ventes par mois
      * @Route(
-     *     path="/bien_immobiliers/prix_metre_carre/{typeVente}",
+     *     path="/bien_immobiliers/priceByMonthYear/{type}",
      *     name="prix_metre_carre",
      *     methods={"GET"},
      * )
      * @param Request $request
-     * @param int $typeVente
+     * @param int $type
      * @return Response
      */
-    public function getPriceMetrePow(Request $request, int $typeVente)
+    public function getPriceMetrePow(Request $request, int $type)
     {
 
-        if ($typeVente === "" || $typeVente === "") {
+        if ($type !== 1 && $type !== 2) {
             return new JsonResponse("Le type de bien doit être appartement ou maison", 400);
         }
 
+        //Récupère les prix des bien
 
-        return new JsonResponse(null, 200);
+        $prixMoy = [];
+        for($i = 0; $i<6; $i++){
+            for($j = 1; $j<13; $j++){
+                $PrixBien= $this->bienImmobilierRepository->getPriceByMonthYear(2015+$i, $j, $type);
+                if ($PrixBien[0][2] > 0)
+                    array_push($prixMoy, $PrixBien[0][1]/$PrixBien[0][2]);
+                else
+                    array_push($prixMoy, 0);
+            }
+        }
+
+        return new JsonResponse($prixMoy, 200);
     }
     //TODO: autres routes pour les autres diagrammes
 }

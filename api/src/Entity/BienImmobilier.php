@@ -32,6 +32,27 @@ use App\Controller\BienImmobilierController;
  *                  },
  *              },
  *          },
+ *          "priceByMonthYear"={
+ *              "method"="get",
+ *              "path"="/bien_immobiliers/priceByMonthYear/{type}",
+ *              "controller"=BienImmobilierController::class,
+ *              "pagination_enabled"=false,
+ *              "openapi_context"={
+ *                  "summary"="Récupère la liste des prix/m² des vente en fonction du mois de l'année et du type",
+ *                  "parameters"={
+ *                       {
+ *                          "name"="type",
+ *                          "type"="integer",
+ *                          "required"=true,
+ *                          "in"="path",
+ *                          "description"="Le type de bien",
+ *                          "schema"={
+ *                              "default"=1,
+ *                          },
+ *                      },
+ *                  },
+ *              },
+ *          },
  *     },
  *     itemOperations={
  *          "get",
