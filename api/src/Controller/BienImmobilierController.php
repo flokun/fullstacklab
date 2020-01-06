@@ -144,5 +144,26 @@ class BienImmobilierController extends AbstractController
         return new JsonResponse($bienImmobiliersSortedByRegion, 200);
     }
 
+    /**
+     * Diagramme linéaire - Récupère le prix au mètre carré des ventes par mois
+     * @Route(
+     *     path="/bien_immobiliers/prix_metre_carre/{typeVente}",
+     *     name="prix_metre_carre",
+     *     methods={"GET"},
+     * )
+     * @param Request $request
+     * @param int $typeVente
+     * @return Response
+     */
+    public function getPriceMetrePow(Request $request, int $typeVente)
+    {
+
+        if ($typeVente === "" || $typeVente === "") {
+            return new JsonResponse("Le type de bien doit être appartement ou maison", 400);
+        }
+
+
+        return new JsonResponse(null, 200);
+    }
     //TODO: autres routes pour les autres diagrammes
 }

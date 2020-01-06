@@ -39,4 +39,25 @@ class BienImmobilierRepository extends ServiceEntityRepository
             dd($e);
         }
     }
+
+    public function getPriceByMonthYear(int $year, int $month, int $typeBien) {
+        try {
+            $from = new \DateTime($year . '-'.$month.'-01 00:00:00');
+            $to = new \DateTime($year . '-'.$month.'-31 23:59:59');
+
+            $query = $this->createQueryBuilder('b')
+                ->select('b.')
+                ->andWhere('b.dateMutation BETWEEN :from AND :to')
+                ->setParameter('from', $from)
+                ->setParameter('to', $to)
+                ->groupBy('b.codeDepartement');
+
+            $result = $query->getQuery()->getResult();
+
+
+            return $result;
+        } catch (\Exception $e) {
+            dd($e);
+        }
+    }
 }
