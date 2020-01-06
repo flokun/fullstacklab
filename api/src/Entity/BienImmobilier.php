@@ -98,6 +98,11 @@ class BienImmobilier
      */
     private $surfaceTerrain;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $typeBien;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -219,6 +224,18 @@ class BienImmobilier
     public function setSurfaceTerrain(int $surfaceTerrain): self
     {
         $this->surfaceTerrain = $surfaceTerrain;
+
+        return $this;
+    }
+
+    public function getTypeBien(): ?int
+    {
+        return $this->typeBien;
+    }
+
+    public function setTypeBien(int $typeBien): self
+    {
+        $this->typeBien = $typeBien;
 
         return $this;
     }
