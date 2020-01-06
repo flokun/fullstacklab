@@ -165,7 +165,7 @@ class BienImmobilierController extends AbstractController
         //Récupère les prix des bien
 
         $prixMoy = [];
-        for($i = 0; $i<6; $i++){
+        for($i = 0; $i<5; $i++){
             for($j = 1; $j<13; $j++){
                 $PrixBien= $this->bienImmobilierRepository->getPriceByMonthYear(2015+$i, $j, $type);
                 if ($PrixBien[0][2] > 0)

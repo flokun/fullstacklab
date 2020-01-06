@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import Navbar from "../../navbar";
 
 const Lineaire = () => {
-  const [annee, setAnnee] = useState(2016);
+  const [typeBien, setTypeBien] = useState(1);
 
   const [erreur, setErreur] = useState('');
 
@@ -11,24 +11,24 @@ const Lineaire = () => {
 
   const [sales, setSales] = useState({});
 
-  const getSalesByRegion = () => {
+  const getPrixByMonth = () => {
     setLoading(true);
 
-    fetch(process.env.REACT_APP_API_ENTRYPOINT + '/bien_immobiliers/ventes_regions/' + annee)
+    fetch(process.env.REACT_APP_API_ENTRYPOINT + '/bien_immobiliers/priceByMonthYear/' + typeBien)
       .then(response => response.json())
-      .then(regions => {
-        if (regions instanceof Object) {
-          setSales(Object.assign({}, regions));
+      .then(prix => {
+        if (prix instanceof Object) {
+          setSales(Object.assign({}, prix));
           setErreur('');
         } else {
-          setErreur(regions);
+          setErreur(prix);
         }
 
         setLoading(false);
       });
   };
 
-  const handleChangeAnnee = e => {
+  const handleChangeTypeBien = e => {
     //Supprime l'ancien svg si il y en a un
     let lastSvg = document.querySelector('svg');
 
@@ -37,7 +37,7 @@ const Lineaire = () => {
     }
 
     if (!loading) {
-      setAnnee(e.target.value);
+      setTypeBien(e.target.value);
       setSales({});
     }
   };
@@ -47,9 +47,9 @@ const Lineaire = () => {
   };
 
   useEffect(() => {
-    document.title = 'Ventes par régions en ' + annee;
-   // getSalesByRegion();
-  }, [annee]);
+    document.title = 'Ventes prix du m²';
+    getPrixByMonth();
+  }, [typeBien]);
 
   return (
     <div>
