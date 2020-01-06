@@ -46,11 +46,10 @@ class BienImmobilierRepository extends ServiceEntityRepository
             $to = new \DateTime($year . '-'.$month.'-31 23:59:59');
 
             $query = $this->createQueryBuilder('b')
-                ->select('b.')
-                ->andWhere('b.dateMutation BETWEEN :from AND :to')
+                ->select('sum(b.valeurFonciere) as prix, sum(b.surfaceReelleBati) as surface, count(b.surfaceReelleBati)')
+                ->andWhere('b.typeBien = '.$typeBien .' AND b.dateMutation BETWEEN :from AND :to')
                 ->setParameter('from', $from)
-                ->setParameter('to', $to)
-                ->groupBy('b.codeDepartement');
+                ->setParameter('to', $to);
 
             $result = $query->getQuery()->getResult();
 
