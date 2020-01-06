@@ -45,9 +45,9 @@ const Lineaire = () => {
   const renderGraphique = () => {
     // set the dimensions and margins of the graph
     var margin = {top: 10, right: 100, bottom: 30, left: 30},
-      width = 460 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
-    const parseTime = d3.timeFormat("%Y-%m-%d %H:%M:%S");
+      width = 800 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
+    const parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
 // append the svg object to the body of the page
     var svg = d3.select("body")
       .append("svg")
@@ -62,12 +62,12 @@ const Lineaire = () => {
       // List of groups (here I have one group per column)
       var allGroup = ["Maison", "Appartement"];
 
-      console.log(data[0].time);
-      data.forEach(function(d) {
-        d.time = parseTime(new Date(d.time));
-      });
 
-      console.log(data[0].time);
+      data.forEach(function(d) {
+        d.time = parseTime(d.time);
+        d.Maison = +d.Maison;
+        d.Appartement = +d.Appartement;
+      });
 
       // add the options to the button
       d3.select("#selectButton")
@@ -78,20 +78,22 @@ const Lineaire = () => {
         .text(function (d) { return d; }) // text showed in the menu
         .attr("value", function (d) { return d; }); // corresponding value returned by the button
 
-      // Add X axis --> it is a date format
+      // Add X axis
       var x = d3.scaleTime()
-        .domain(d3.extent(data, function(d) { return d.time; }))
-        .range([ 0, width ]);
+        .range([ 0, width ])
+        .domain(d3.extent(data, function(d) { return d.time; }));
       svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x));
 
       // Add Y axis
       var y = d3.scaleLinear()
-        .domain( [0,10])
+        .domain( d3.extent(data, function (d) { return d.Maison;}))
         .range([ height, 0 ]);
       svg.append("g")
         .call(d3.axisLeft(y));
+
+
 
       // Initialize line with group a
       var line = svg
@@ -102,7 +104,7 @@ const Lineaire = () => {
           .x(function(d) { return x(+d.time) })
           .y(function(d) { return y(+d.Maison) })
         )
-        .attr("stroke", "black")
+        .attr("stroke", "#3498DB")
         .style("stroke-width", 4)
         .style("fill", "none");
 
@@ -118,11 +120,10 @@ const Lineaire = () => {
           .transition()
           .duration(1000)
           .attr("d", d3.line()
-            .x(function(d) { return x(+d.time) })
+            .x(function(d) { return x(d.time) })
             .y(function(d) { return y(+d.value) })
           );
       }
-
       // When the button is changed, run the updateChart function
       d3.select("#selectButton").on("change", function(d) {
         // recover the option that has been chosen
@@ -145,6 +146,7 @@ const Lineaire = () => {
 
       <div className="container">
         <select id="selectButton"></select>
+        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
         {renderGraphique()}
       </div>
     </div>

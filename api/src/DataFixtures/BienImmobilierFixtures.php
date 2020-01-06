@@ -57,7 +57,6 @@ class BienImmobilierFixtures extends Fixture implements FixtureGroupInterface
                 fclose($handle);
             }
 
-            break;
         }
 
         $manager->flush();

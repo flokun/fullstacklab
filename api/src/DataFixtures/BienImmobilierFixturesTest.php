@@ -44,8 +44,6 @@ class BienImmobilierFixturesTest extends Fixture implements FixtureGroupInterfac
 
                     $numeroLigne++;
                 }
-
-                fclose($handle);
             }
         }
 
