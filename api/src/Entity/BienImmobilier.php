@@ -99,7 +99,7 @@ class BienImmobilier
     private $surfaceTerrain;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $typeBien;
 
@@ -233,7 +233,7 @@ class BienImmobilier
         return $this->typeBien;
     }
 
-    public function setTypeBien(int $typeBien): self
+    public function setTypeBien(?int $typeBien): self
     {
         $this->typeBien = $typeBien;
 

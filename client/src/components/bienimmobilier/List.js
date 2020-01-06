@@ -69,6 +69,7 @@ class List extends Component {
               <th>Code commune</th>
               <th>Surface réelle bâti</th>
               <th>Surface terrain</th>
+              <th>Type Bien</th>
               <th colSpan={2}/>
             </tr>
             </thead>
@@ -91,6 +92,7 @@ class List extends Component {
                 <td>{item['codeCommune']}</td>
                 <td>{item['surfaceReelleBati']}</td>
                 <td>{item['surfaceTerrain']}</td>
+                <td>{item['typeBien']}</td>
                 <td>
                   <Link to={`show/${encodeURIComponent(item['@id'])}`}>
                     <span className="fa fa-search" aria-hidden="true"/>

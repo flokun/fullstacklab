@@ -40,7 +40,7 @@ class BienImmobilierFixtures extends Fixture implements FixtureGroupInterface
                             ->setCodeCommune($infos[19])
                             ->setSurfaceReelleBati((int)$infos[38])
                             ->setSurfaceTerrain((int)$infos[42])
-                            ->setTypeBien((int)$infos[36]);
+                            ->setTypeBien((int)$infos[35]);
 
                         $manager->persist($bienImmobilier);
 
