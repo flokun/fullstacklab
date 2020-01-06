@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {list, reset} from '../../actions/bienimmobilier/list';
 import Navbar from "../navbar";
+import './css/list.css';
 
 class List extends Component {
   static propTypes = {
@@ -40,9 +41,10 @@ class List extends Component {
       <div>
         <Navbar/>
 
-        <div className="container">
-          <h1 className="text-center">Liste des biens immobilier</h1>
-
+        <div className="container-fluid">
+          <br/>
+          <h1 className="text-center">Liste des biens immobiliers</h1>
+          <br/>
           {this.props.loading && (
             <div className="alert alert-info">Chargement...</div>
           )}
@@ -55,58 +57,56 @@ class List extends Component {
             <div className="alert alert-danger">{this.props.error}</div>
           )}
 
-          <table className="table table-responsive table-striped table-hover">
-            <thead>
-            <tr>
-              <th>ID</th>
-              <th>N° de disposition</th>
-              <th>Date de mutation</th>
-              <th>Nature de la mutation</th>
-              <th>Valeur foncière</th>
-              <th>Code postal</th>
-              <th>Commune</th>
-              <th>Code département</th>
-              <th>Code commune</th>
-              <th>Surface réelle bâti</th>
-              <th>Surface terrain</th>
-              <th colSpan={2}/>
-            </tr>
-            </thead>
-            <tbody>
-            {this.props.retrieved &&
-            this.props.retrieved['hydra:member'].map(item => (
-              <tr key={item['@id']}>
-                <th scope="row">
-                  <Link to={`show/${encodeURIComponent(item['@id'])}`}>
-                    {item.id}
-                  </Link>
-                </th>
-                <td>{item['numDispo']}</td>
-                <td>{item['dateMutation']}</td>
-                <td>{item['natureMutation']}</td>
-                <td>{item['valeurFonciere']}</td>
-                <td>{item['codePostal']}</td>
-                <td>{item['commune']}</td>
-                <td>{item['codeDepartement']}</td>
-                <td>{item['codeCommune']}</td>
-                <td>{item['surfaceReelleBati']}</td>
-                <td>{item['surfaceTerrain']}</td>
-                <td>
-                  <Link to={`show/${encodeURIComponent(item['@id'])}`}>
-                    <span className="fa fa-search" aria-hidden="true"/>
-                    <span className="sr-only">Show</span>
-                  </Link>
-                </td>
-                <td>
-                  <Link to={`edit/${encodeURIComponent(item['@id'])}`}>
-                    <span className="fa fa-pencil" aria-hidden="true"/>
-                    <span className="sr-only">Edit</span>
-                  </Link>
-                </td>
-              </tr>
-            ))}
-            </tbody>
-          </table>
+          <div className="widget-main no-padding">
+            <div className="table-responsive">
+              <table className="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>N° de disposition</th>
+                  <th>Date de mutation</th>
+                  <th>Nature de la mutation</th>
+                  <th>Valeur foncière</th>
+                  <th>Code postal</th>
+                  <th>Commune</th>
+                  <th>Code département</th>
+                  <th>Code commune</th>
+                  <th>Surface réelle bâti</th>
+                  <th>Surface terrain</th>
+                  <th colSpan={1}/>
+                </tr>
+                </thead>
+                <tbody>
+                {this.props.retrieved &&
+                this.props.retrieved['hydra:member'].map(item => (
+                  <tr key={item['@id']}>
+                    <th scope="row">
+                      <Link to={`show/${encodeURIComponent(item['@id'])}`}>
+                        {item.id}
+                      </Link>
+                    </th>
+                    <td>{item['numDispo']}</td>
+                    <td>{item['dateMutation']}</td>
+                    <td>{item['natureMutation']}</td>
+                    <td>{item['valeurFonciere']}</td>
+                    <td>{item['codePostal']}</td>
+                    <td>{item['commune']}</td>
+                    <td>{item['codeDepartement']}</td>
+                    <td>{item['codeCommune']}</td>
+                    <td>{item['surfaceReelleBati']}</td>
+                    <td>{item['surfaceTerrain']}</td>
+                    <td>
+                      <Link to={`show/${encodeURIComponent(item['@id'])}`}>
+                        <span className="fa fa-search" aria-hidden="true"/>
+                        <span className="sr-only">Show</span>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
 
           {this.pagination()}
         </div>
@@ -126,34 +126,33 @@ class List extends Component {
     } = view;
 
     return (
+      <div className="centrerPagin">
       <nav aria-label="Page navigation">
         <Link
           to="."
-          className={`btn btn-primary${previous ? '' : ' disabled'}`}
-        >
-          <span aria-hidden="true">&lArr;</span> First
+          className={`btn btn-primary btn-arrow-left${previous ? '' : ' disabled'}`}
+        >Premier
         </Link>
         <Link
           to={
             !previous || previous === first ? '.' : encodeURIComponent(previous)
           }
-          className={`btn btn-primary${previous ? '' : ' disabled'}`}
-        >
-          <span aria-hidden="true">&larr;</span> Previous
+          className={`btn btn-info btn-arrow-left${previous ? '' : ' disabled'}`}
+        >Précédent
         </Link>
+        <button type="button" className="btn btn-link"><a href={"https://localhost/bien_immobiliers/"}>Retour en Haut</a></button>
         <Link
           to={next ? encodeURIComponent(next) : '#'}
-          className={`btn btn-primary${next ? '' : ' disabled'}`}
-        >
-          Next <span aria-hidden="true">&rarr;</span>
+          className={`btn btn-info btn-arrow-right${next ? '' : ' disabled'}`}
+        >Suivant
         </Link>
         <Link
           to={last ? encodeURIComponent(last) : '#'}
-          className={`btn btn-primary${next ? '' : ' disabled'}`}
-        >
-          Last <span aria-hidden="true">&rArr;</span>
+          className={`btn btn-primary btn-arrow-right${next ? '' : ' disabled'}`}
+        >Dernier
         </Link>
       </nav>
+      </div>
     );
   }
 
