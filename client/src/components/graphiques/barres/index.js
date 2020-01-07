@@ -167,8 +167,6 @@ const Barres = () => {
       .text(function (data_in) {
         return data_in;
       });
-
-    // console.log(data);
   };
 
   useEffect(() => {

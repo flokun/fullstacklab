@@ -156,38 +156,39 @@
          */
         public function getSalesByPeriod( Request $request, string $period_type, string $start_date, string $end_date ) {
             $computedData = [];
-
-            $startMonth = date( 'm', strtotime( $start_date ) );
-            $endMonth   = date( 'm', strtotime( $end_date ) );
+            $ecart        = strtotime( $end_date ) - strtotime( $start_date );
+            $nb_ecart     = 0;
+            $ecart_type   = '';
 
             switch ( $period_type ) {
                 case  'month':
-                    for ( $i = 0; $i <= $endMonth - $startMonth; $i++ ) {
-                        $sd = date( "Y-m-d", strtotime( "+" . $i . " month", strtotime( $start_date ) ) );
-                        $ed = date( "Y-m-d", strtotime( "+" . ( $i + 1 ) . " month", strtotime( $start_date ) ) );
-
-                        if ( $i === $endMonth - $startMonth ) {
-                            $ed = $end_date;
-                        }
-
-                        $computedData[] = [
-                            'periode' => $sd . ' au ' . $ed,
-                            'nb_ventes' => $this->bienImmobilierRepository->getSalesByPeriod( $sd, $ed )[0][1]
-                        ];
-                    }
+                    $nb_ecart   = round( $ecart / ( 60 * 60 * 24 * 31 ) ) - 1;
+                    $ecart_type = 'month';
                     break;
                 case  'week':
-                    //TODO
+                    $nb_ecart   = round( round( $ecart / ( 60 * 60 * 24 ) ) / 7 );
+                    $ecart_type = 'day';
                     break;
                 case  'day':
-                    //TODO
+                    $nb_ecart   = round( $ecart / ( 60 * 60 * 24 ) );
+                    $ecart_type = 'day';
                     break;
             }
 
-            //TODO : Graphique responsive + jour / semaine / mois + ameliorer visuel
+            for ( $i = 0; $i <= $nb_ecart; $i++ ) {
+                $sd = date( "Y-m-d", strtotime( "+" . ( $period_type === 'week' ? $i * 7 : $i ) . " " . $ecart_type, strtotime( $start_date ) ) );
+                $ed = date( "Y-m-d", strtotime( "+" . ( $period_type === 'week' ? ( $i + 1 ) * 7 : ( $i + 1 ) ) . " " . $ecart_type, strtotime( $start_date ) ) );
+
+                if ( $i === $nb_ecart ) {
+                    $ed = $end_date;
+                }
+
+                $computedData[] = [
+                    'periode' => $sd . ' au ' . $ed,
+                    'nb_ventes' => $this->bienImmobilierRepository->getSalesByPeriod( $sd, $ed )[0][1]
+                ];
+            }
 
             return new JsonResponse( $computedData, 200 );
         }
-
-        //TODO: autres routes pour les autres diagrammes
     }
