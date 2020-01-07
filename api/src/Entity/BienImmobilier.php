@@ -4,9 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
-use App\Controller\BienImmobilierController;
+use App\Controller\RegionController;
 
-// *              "pagination_fetch_join_collection"=true,
 /**
  * @ApiResource(
  *     collectionOperations={
@@ -14,8 +13,9 @@ use App\Controller\BienImmobilierController;
  *          "ventes_regions"={
  *              "method"="get",
  *              "path"="/bien_immobiliers/ventes_regions/{year}",
- *              "controller"=BienImmobilierController::class,
+ *              "controller"=RegionController::class,
  *              "pagination_enabled"=false,
+ *              "read"=false,
  *              "openapi_context"={
  *                  "summary"="Récupère la répartition des ventes par région dans une année donnée",
  *                  "parameters"={

@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import Navbar from "../../navbar";
 
 const Circulaire = () => {
-  const [annee, setAnnee] = useState(2016);
+  const [annee, setAnnee] = useState(2015);
 
   const [erreur, setErreur] = useState('');
 
@@ -165,11 +165,16 @@ const Circulaire = () => {
         {loading && <div className="mt-2 alert alert-info">Chargement...</div>}
 
         {!loading && erreur === '' && Object.entries(sales).length > 0 && renderGraphique()}
-        <br/>
-        <h3>Année : {annee}</h3>
-        <br/>
 
-        <input type="number" className="form-control" min="2015" max="2019" defaultValue="2016" onChange={handleChangeAnnee} />
+        <h3>Année : {annee}</h3>
+
+        <select name="anneeSelect" id="anneeSelect" className="form-control" onChange={handleChangeAnnee}>
+          <option value="2015" selected="selected">2015</option>
+          <option value="2016">2016</option>
+          <option value="2017">2017</option>
+          <option value="2018">2018</option>
+          <option value="2019">2019</option>
+        </select>
 
         {!loading && Object.entries(sales).length === 0 && erreur === '' && <p>Pas de données disponible pour cette date.</p> }
 

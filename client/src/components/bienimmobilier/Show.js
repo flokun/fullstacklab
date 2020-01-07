@@ -44,7 +44,7 @@ class Show extends Component {
         )}
         {this.props.error && (
           <div className="alert alert-danger" role="alert">
-            <span className="fa fa-exclamation-triangle" aria-hidden="true"/>{' '}
+            <span className="fa fa-exclamation-triangle" aria-hidden="true" />{' '}
             {this.props.error}
           </div>
         )}

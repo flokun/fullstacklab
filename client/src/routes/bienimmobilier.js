@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { List, Create, Update, Show } from '../components/bienimmobilier/';
+import { List, Show } from '../components/bienimmobilier/';
 
 export default [
   <Route path="/bien_immobiliers/show/:id" component={Show} exact key="show" />,

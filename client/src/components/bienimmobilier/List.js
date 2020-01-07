@@ -41,8 +41,7 @@ class List extends Component {
       <div>
         <Navbar/>
 
-        <div className="container-fluid">
-          <br/>
+        <div className="container-fluid mt-2">
           <h1 className="text-center">Liste des biens immobiliers</h1>
           <br/>
           {this.props.loading && (
@@ -107,7 +106,6 @@ class List extends Component {
               </table>
             </div>
           </div>
-
           {this.pagination()}
         </div>
       </div>
