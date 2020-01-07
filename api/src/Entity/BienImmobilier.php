@@ -71,8 +71,9 @@ use App\Controller\PrixSurfaceController;
  *                              "default"="2017-12-31",
  *                          },
  *                      },
-                  }
- *           }
+ *                  },
+ *              },
+ *           },
  *          "priceByMonthYear"={
  *              "method"="get",
  *              "path"="/bien_immobiliers/priceByMonthYear",
