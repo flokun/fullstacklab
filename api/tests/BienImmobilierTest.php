@@ -27,8 +27,24 @@ class BienImmobilierTest extends KernelTestCase
             ->getManager();
     }
 
+    /** @test */
     public function getAllBienImmobilier() {
         $biensImmobilier = $this->entityManager->getRepository(BienImmobilier::class)->findAll();
         $this->assertGreaterThan(1, $biensImmobilier);
+    }
+
+    /** @test */
+    public function getBienImmobilier() {
+        /** @var BienImmobilier $biensImmobilier */
+        $biensImmobilier = $this->entityManager->getRepository(BienImmobilier::class)->find(1);
+        $this->assertEquals(2, $biensImmobilier->getNumDispo());
+        $this->assertEquals("2015-01-05", $biensImmobilier->getDateMutation()->format("Y-m-d"));
+        $this->assertEquals("Vente", $biensImmobilier->getNatureMutation());
+        $this->assertEquals(120, $biensImmobilier->getValeurFonciere());
+        $this->assertEquals(1250, $biensImmobilier->getCodePostal());
+        $this->assertEquals(1, $biensImmobilier->getCodeDepartement());
+        $this->assertEquals(245, $biensImmobilier->getCodeCommune());
+        $this->assertEquals(0, $biensImmobilier->getSurfaceReelleBati());
+        $this->assertEquals(82, $biensImmobilier->getSurfaceTerrain());
     }
 }
