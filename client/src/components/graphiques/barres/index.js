@@ -34,11 +34,12 @@ const Barres = () => {
 
   const handleChangeStartDate = e => {
     if (e.target.value !== '') {
-      //Supprime l'ancien svg si il y en a un
-      let lastSvg = document.querySelector('svg');
+      let barChart = document.querySelector('#bar-chart');
+      let labels = document.querySelector('#label-chart');
 
-      if (lastSvg !== null) {
-        lastSvg.parentNode.removeChild(lastSvg);
+      if (barChart !== null) {
+        barChart.innerHTML = '';
+        labels.innerHTML = '';
       }
 
       if (!loading) {
@@ -50,11 +51,12 @@ const Barres = () => {
 
   const handleChangeEndDate = e => {
     if (e.target.value !== '') {
-      //Supprime l'ancien svg si il y en a un
-      let lastSvg = document.querySelector('svg');
+      let barChart = document.querySelector('#bar-chart');
+      let labels = document.querySelector('#label-chart');
 
-      if (lastSvg !== null) {
-        lastSvg.parentNode.removeChild(lastSvg);
+      if (barChart !== null) {
+        barChart.innerHTML = '';
+        labels.innerHTML = '';
       }
 
       if (!loading) {
@@ -65,11 +67,12 @@ const Barres = () => {
   };
 
   const handleChangePeriodType = e => {
-    //Supprime l'ancien svg si il y en a un
-    let lastSvg = document.querySelector('svg');
+    let barChart = document.querySelector('#bar-chart');
+    let labels = document.querySelector('#label-chart');
 
-    if (lastSvg !== null) {
-      lastSvg.parentNode.removeChild(lastSvg);
+    if (barChart !== null) {
+      barChart.innerHTML = '';
+      labels.innerHTML = '';
     }
 
     if (!loading) {
@@ -164,12 +167,14 @@ const Barres = () => {
       .text(function (data_in) {
         return data_in;
       });
+
+    // console.log(data);
   };
 
   useEffect(() => {
     document.title = 'Ventes par période de ' + startDate + ' à ' + endDate + '.';
     getSalesByPeriod();
-  }, [startDate, endDate]);
+  }, [startDate, endDate, periodType]);
 
   return (
     <div>
