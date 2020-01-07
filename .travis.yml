@@ -8,10 +8,10 @@ env:
 
 services:
   - postgresql
-
+  
 before_script:
-  - cd api/
   - psql -c 'create database api;' -U postgres
+  - cd api/
 
 script:
   - composer install

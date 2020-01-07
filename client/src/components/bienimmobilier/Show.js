@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { retrieve, reset } from '../../actions/bienimmobilier/show';
-import { del } from '../../actions/bienimmobilier/delete';
+import {retrieve, reset} from '../../actions/bienimmobilier/show';
+import './css/list.css';
 
 class Show extends Component {
   static propTypes = {
@@ -13,10 +13,6 @@ class Show extends Component {
     eventSource: PropTypes.instanceOf(EventSource),
     retrieve: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
-    deleteError: PropTypes.string,
-    deleteLoading: PropTypes.bool.isRequired,
-    deleted: PropTypes.object,
-    del: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -33,14 +29,14 @@ class Show extends Component {
   };
 
   render() {
-    if (this.props.deleted) return <Redirect to=".." />;
+    if (this.props.deleted) return <Redirect to=".."/>;
 
     const item = this.props.retrieved;
 
     return (
-      <div>
-        <h1>Show {item && item['@id']}</h1>
-
+      <div className="centrer">
+        <h1>Nom de l'objet : {item && item['@id']}</h1>
+        <br/>
         {this.props.loading && (
           <div className="alert alert-info" role="status">
             Loading...
@@ -54,74 +50,65 @@ class Show extends Component {
         )}
         {this.props.deleteError && (
           <div className="alert alert-danger" role="alert">
-            <span className="fa fa-exclamation-triangle" aria-hidden="true" />{' '}
-            {this.props.deleteError}
+            <span className="fa fa-exclamation-triangle" aria-hidden="true"/>{' '}
           </div>
         )}
 
         {item && (
-          <table className="table table-responsive table-striped table-hover">
+          <table className="table table-striped table-hover" align="center">
             <thead>
-              <tr>
-                <th>Field</th>
-                <th>Value</th>
-              </tr>
+            <tr>
+              <th>Champ</th>
+              <th>Valeur</th>
+            </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">numDispo</th>
-                <td>{item['numDispo']}</td>
-              </tr>
-              <tr>
-                <th scope="row">dateMutation</th>
-                <td>{item['dateMutation']}</td>
-              </tr>
-              <tr>
-                <th scope="row">natureMutation</th>
-                <td>{item['natureMutation']}</td>
-              </tr>
-              <tr>
-                <th scope="row">valeurFonciere</th>
-                <td>{item['valeurFonciere']}</td>
-              </tr>
-              <tr>
-                <th scope="row">codePostal</th>
-                <td>{item['codePostal']}</td>
-              </tr>
-              <tr>
-                <th scope="row">commune</th>
-                <td>{item['commune']}</td>
-              </tr>
-              <tr>
-                <th scope="row">codeDepartement</th>
-                <td>{item['codeDepartement']}</td>
-              </tr>
-              <tr>
-                <th scope="row">codeCommune</th>
-                <td>{item['codeCommune']}</td>
-              </tr>
-              <tr>
-                <th scope="row">surfaceReelleBati</th>
-                <td>{item['surfaceReelleBati']}</td>
-              </tr>
-              <tr>
-                <th scope="row">surfaceTerrain</th>
-                <td>{item['surfaceTerrain']}</td>
-              </tr>
+            <tr>
+              <th scope="row">numDispo</th>
+              <td>{item['numDispo']}</td>
+            </tr>
+            <tr>
+              <th scope="row">dateMutation</th>
+              <td>{item['dateMutation']}</td>
+            </tr>
+            <tr>
+              <th scope="row">natureMutation</th>
+              <td>{item['natureMutation']}</td>
+            </tr>
+            <tr>
+              <th scope="row">valeurFonciere</th>
+              <td>{item['valeurFonciere']}</td>
+            </tr>
+            <tr>
+              <th scope="row">codePostal</th>
+              <td>{item['codePostal']}</td>
+            </tr>
+            <tr>
+              <th scope="row">commune</th>
+              <td>{item['commune']}</td>
+            </tr>
+            <tr>
+              <th scope="row">codeDepartement</th>
+              <td>{item['codeDepartement']}</td>
+            </tr>
+            <tr>
+              <th scope="row">codeCommune</th>
+              <td>{item['codeCommune']}</td>
+            </tr>
+            <tr>
+              <th scope="row">surfaceReelleBati</th>
+              <td>{item['surfaceReelleBati']}</td>
+            </tr>
+            <tr>
+              <th scope="row">surfaceTerrain</th>
+              <td>{item['surfaceTerrain']}</td>
+            </tr>
             </tbody>
           </table>
         )}
-        <Link to=".." className="btn btn-primary">
-          Back to list
+        <Link to=".." className="btn btn-info2">
+          Retour à la liste
         </Link>
-        {item && (
-          <Link to={`/bien_immobiliers/edit/${encodeURIComponent(item['@id'])}`}>
-            <button className="btn btn-warning">Edit</button>
-          </Link>
-        )}
-        <button onClick={this.del} className="btn btn-danger">
-          Delete
-        </button>
       </div>
     );
   }
@@ -153,7 +140,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   retrieve: id => dispatch(retrieve(id)),
-  del: item => dispatch(del(item)),
   reset: eventSource => dispatch(reset(eventSource))
 });
 

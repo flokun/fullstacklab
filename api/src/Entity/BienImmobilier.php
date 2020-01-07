@@ -4,9 +4,9 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
-use App\Controller\BienImmobilierController;
+use App\Controller\RegionController;
+use App\Controller\PrixSurfaceController;
 
-// *              "pagination_fetch_join_collection"=true,
 /**
  * @ApiResource(
  *     collectionOperations={
@@ -14,8 +14,9 @@ use App\Controller\BienImmobilierController;
  *          "ventes_regions"={
  *              "method"="get",
  *              "path"="/bien_immobiliers/ventes_regions/{year}",
- *              "controller"=BienImmobilierController::class,
+ *              "controller"=RegionController::class,
  *              "pagination_enabled"=false,
+ *              "read"=false,
  *              "openapi_context"={
  *                  "summary"="Récupère la répartition des ventes par région dans une année donnée",
  *                  "parameters"={
@@ -35,7 +36,7 @@ use App\Controller\BienImmobilierController;
  *          "ventes_period"={
  *              "method"="get",
  *              "path"="/bien_immobiliers/ventes_period/{period_type}/{start_date}/{end_date}",
- *              "controller"=BienImmobilierController::class,
+ *              "controller"=RegionController::class,
  *              "pagination_enabled"=false,
  *              "openapi_context"={
  *                  "summary"="Récupère les ventes sur une période donnée",
@@ -70,6 +71,17 @@ use App\Controller\BienImmobilierController;
  *                              "default"="2017-12-31",
  *                          },
  *                      },
+                  }
+ *           }
+ *          "priceByMonthYear"={
+ *              "method"="get",
+ *              "path"="/bien_immobiliers/priceByMonthYear",
+ *              "controller"=PrixSurfaceController::class,
+ *              "pagination_enabled"=false,
+ *              "read"=false,
+ *              "openapi_context"={
+ *                  "summary"="Récupère la liste des prix/m² des ventes",
+ *                  "parameters"={
  *                  },
  *              },
  *          },
@@ -138,6 +150,11 @@ class BienImmobilier
      * @ORM\Column(type="integer")
      */
     private $surfaceTerrain;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $typeBien;
 
     public function getId(): ?int
     {
@@ -260,6 +277,18 @@ class BienImmobilier
     public function setSurfaceTerrain(int $surfaceTerrain): self
     {
         $this->surfaceTerrain = $surfaceTerrain;
+
+        return $this;
+    }
+
+    public function getTypeBien(): ?int
+    {
+        return $this->typeBien;
+    }
+
+    public function setTypeBien(?int $typeBien): self
+    {
+        $this->typeBien = $typeBien;
 
         return $this;
     }
