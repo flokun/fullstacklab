@@ -9,6 +9,9 @@ env:
 services:
   - postgresql
 
+addons:
+  postgresql: "12"
+  
 before_script: cd api/
 
 script:
