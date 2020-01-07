@@ -4,8 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
-use App\Controller\RegionController;
-use App\Controller\PrixSurfaceController;
+use App\Controller\VenteBarreController;
 
 /**
  * @ApiResource(
@@ -36,8 +35,9 @@ use App\Controller\PrixSurfaceController;
  *          "ventes_period"={
  *              "method"="get",
  *              "path"="/bien_immobiliers/ventes_period/{period_type}/{start_date}/{end_date}",
- *              "controller"=RegionController::class,
+ *              "controller"=VenteBarreController::class,
  *              "pagination_enabled"=false,
+ *              "read"=false,
  *              "openapi_context"={
  *                  "summary"="Récupère les ventes sur une période donnée",
  *                  "parameters"={
