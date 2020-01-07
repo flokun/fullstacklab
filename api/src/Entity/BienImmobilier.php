@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use App\Controller\VenteBarreController;
+use App\Controller\PrixSurfaceController;
+use App\Controller\RegionController;
 
 /**
  * @ApiResource(
