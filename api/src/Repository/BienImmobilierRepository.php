@@ -39,4 +39,21 @@ class BienImmobilierRepository extends ServiceEntityRepository
             dd($e);
         }
     }
+
+    public function getPriceByMonthYear() {
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+        select date_trunc( \'month\', date_mutation ) as date, sum(valeur_fonciere / surface_reelle_bati), count(*), type_bien
+        from
+             bien_immobilier
+        where surface_reelle_bati > 0
+        and type_bien in (1, 2)
+        group by date_trunc( \'year\', date_mutation ), date_trunc( \'month\', date_mutation ), type_bien;
+        ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
 }

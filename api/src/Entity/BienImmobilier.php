@@ -32,6 +32,18 @@ use App\Controller\RegionController;
  *                  },
  *              },
  *          },
+ *          "priceByMonthYear"={
+ *              "method"="get",
+ *              "path"="/bien_immobiliers/priceByMonthYear",
+ *              "controller"=RegionController::class,
+ *              "pagination_enabled"=false,
+ *              "read"=false,
+ *              "openapi_context"={
+ *                  "summary"="Récupère la liste des prix/m² des ventes",
+ *                  "parameters"={
+ *                  },
+ *              },
+ *          },
  *     },
  *     itemOperations={
  *          "get",
@@ -97,6 +109,11 @@ class BienImmobilier
      * @ORM\Column(type="integer")
      */
     private $surfaceTerrain;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $typeBien;
 
     public function getId(): ?int
     {
@@ -219,6 +236,18 @@ class BienImmobilier
     public function setSurfaceTerrain(int $surfaceTerrain): self
     {
         $this->surfaceTerrain = $surfaceTerrain;
+
+        return $this;
+    }
+
+    public function getTypeBien(): ?int
+    {
+        return $this->typeBien;
+    }
+
+    public function setTypeBien(?int $typeBien): self
+    {
+        $this->typeBien = $typeBien;
 
         return $this;
     }
