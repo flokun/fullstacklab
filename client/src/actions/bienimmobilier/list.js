@@ -4,7 +4,6 @@ import {
   extractHubURL,
   mercureSubscribe as subscribe
 } from '../../utils/dataAccess';
-import { success as deleteSuccess } from './delete';
 
 export function error(error) {
   return { type: 'BIENIMMOBILIER_LIST_ERROR', error };
@@ -55,7 +54,6 @@ export function reset(eventSource) {
     if (eventSource) eventSource.close();
 
     dispatch({ type: 'BIENIMMOBILIER_LIST_RESET' });
-    dispatch(deleteSuccess(null));
   };
 }
 

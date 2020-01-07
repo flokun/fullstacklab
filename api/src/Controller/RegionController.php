@@ -5,28 +5,32 @@ namespace App\Controller;
 
 
 use App\Repository\BienImmobilierRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
-class BienImmobilierController extends AbstractController
+class RegionController
 {
     const MIN_YEAR = 2015;
     const MAX_YEAR = 2019;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
     /**
      * @var BienImmobilierRepository
      */
     private $bienImmobilierRepository;
 
-    public function __construct(BienImmobilierRepository $bienImmobilierRepository)
+    public function __construct(EntityManagerInterface $manager, BienImmobilierRepository $bienImmobilierRepository)
     {
+        $this->entityManager = $manager;
         $this->bienImmobilierRepository = $bienImmobilierRepository;
     }
 
-    public function getSalesByRegion(Request $request, int $year)
+    public function __invoke(Request $data, int $year)
     {
         if ($year < self::MIN_YEAR || $year > self::MAX_YEAR) {
             return new JsonResponse("La date doit être comprise entre 2015 et 2019", 400);
@@ -132,35 +136,4 @@ class BienImmobilierController extends AbstractController
 
         return new JsonResponse($bienImmobiliersSortedByRegion, 200);
     }
-
-    /**
-     * Diagramme linéaire - Récupère le prix au mètre carré des ventes par mois
-     * @Route(
-     *     path="/bien_immobiliers/priceByMonthYear/",
-     *     name="prix_metre_carre",
-     *     methods={"GET"},
-     * )
-     * @param Request $request
-     * @return Response
-     */
-    public function getPriceMetrePow(Request $request)
-    {
-        //Récupère les prix des bien
-
-        $prixMoy = [];
-        $cpt = 0;
-
-        $PrixBien= $this->bienImmobilierRepository->getPriceByMonthYear();
-        for($i = 0; $i<count($PrixBien); $i+=2){
-            $prixMoy[$cpt] = [];
-            $prixMoy[$cpt]["time"] = $PrixBien[$i]["date"];
-            $prixMoy[$cpt]["Maison"] = ($PrixBien[$i]["sum"] / $PrixBien[$i]["count"])/1000;
-            $prixMoy[$cpt]["Appartement"] = ($PrixBien[$i+1]["sum"] / $PrixBien[$i+1]["count"])/1000;
-            $cpt++;
-        }
-
-        return new JsonResponse($prixMoy, 200);
-    }
-
-  //TODO: autres routes pour les autres diagrammes
 }
