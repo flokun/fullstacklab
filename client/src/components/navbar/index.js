@@ -26,6 +26,7 @@ const Navbar = () => {
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
               <a className="dropdown-item" href="/graphiques/circulaire">Diagramme circulaire</a>
+              <a className="dropdown-item" href="/graphiques/barres">Diagramme à barres</a>
               <a className="dropdown-item" href="/graphiques/lineaire">Diagramme lineaire</a>
             </div>
           </li>

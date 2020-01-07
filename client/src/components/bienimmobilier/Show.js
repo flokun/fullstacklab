@@ -51,7 +51,6 @@ class Show extends Component {
         {this.props.deleteError && (
           <div className="alert alert-danger" role="alert">
             <span className="fa fa-exclamation-triangle" aria-hidden="true"/>{' '}
-            {this.props.deleteError}
           </div>
         )}
 

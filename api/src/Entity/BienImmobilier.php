@@ -33,6 +33,46 @@ use App\Controller\PrixSurfaceController;
  *                  },
  *              },
  *          },
+ *          "ventes_period"={
+ *              "method"="get",
+ *              "path"="/bien_immobiliers/ventes_period/{period_type}/{start_date}/{end_date}",
+ *              "controller"=RegionController::class,
+ *              "pagination_enabled"=false,
+ *              "openapi_context"={
+ *                  "summary"="Récupère les ventes sur une période donnée",
+ *                  "parameters"={
+ *                      {
+ *                          "name"="period_type",
+ *                          "type"="string",
+ *                          "required"=true,
+ *                          "in"="path",
+ *                          "description"="Le type de decoupage pour le graphique",
+ *                          "schema"={
+ *                              "default"="month",
+ *                          },
+ *                      },
+ *                      {
+ *                          "name"="start_date",
+ *                          "type"="string",
+ *                          "required"=true,
+ *                          "in"="path",
+ *                          "description"="L'année de début sur laquelle on souhaite récupérer les ventes",
+ *                          "schema"={
+ *                              "default"="2017-01-01",
+ *                          },
+ *                      },
+ *                      {
+ *                          "name"="end_date",
+ *                          "type"="string",
+ *                          "required"=true,
+ *                          "in"="path",
+ *                          "description"="L'année de fin sur laquelle on souhaite récupérer les ventes",
+ *                          "schema"={
+ *                              "default"="2017-12-31",
+ *                          },
+ *                      },
+                  }
+ *           }
  *          "priceByMonthYear"={
  *              "method"="get",
  *              "path"="/bien_immobiliers/priceByMonthYear",
