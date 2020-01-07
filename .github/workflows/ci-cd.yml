@@ -11,7 +11,7 @@ env:
 
 jobs:
   docker-build-test-deploy:
-    name: Docker build/test/deploy (Docker ${{ matrix.docker }})
+    name: Docker build/__tests__/deploy (Docker ${{ matrix.docker }})
     runs-on: ubuntu-latest
     container:
       image: docker:${{ matrix.docker }}
@@ -105,7 +105,7 @@ jobs:
             php \
 
   docker-build-test-deploy-prod:
-    name: Docker build/test/deploy (Docker ${{ matrix.docker }}) (production)
+    name: Docker build/__tests__/deploy (Docker ${{ matrix.docker }}) (production)
     runs-on: ubuntu-latest
     container:
       image: docker:${{ matrix.docker }}

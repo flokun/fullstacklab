@@ -12,11 +12,12 @@ services:
 addons:
   postgresql: "12"
   
-before_script: cd api/
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - cd api/
 
 script:
   - composer install
-  - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:update --force --env=test
   - php bin/console doctrine:fixtures:load --append --group=tests --env=test
   - php bin/phpunit --coverage-clover=coverage.xml
