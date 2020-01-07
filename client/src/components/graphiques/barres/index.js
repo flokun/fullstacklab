@@ -93,8 +93,7 @@ const Barres = () => {
     let margin = 100;
     let width = 1300 - 2 * margin;
     let height = 600 - 2 * margin;
-    let barWidth = 40;
-    let barOffset = 55;
+    let barWidth = width / x.length;
 
     let max = d3.max(y);
     let basicColor = '#3c763d';
@@ -128,7 +127,7 @@ const Barres = () => {
         return height - (((max - data_in) / max) * height);
       })
       .attr('x', function (data_in, i) {
-        return i * (barWidth + barOffset);
+        return i * barWidth;
       })
       .attr('y', function (data_in) {
         return ((max - data_in) / max) * height;
@@ -161,7 +160,7 @@ const Barres = () => {
         return 20;
       })
       .attr('x', function (data_in, i) {
-        return i * (barWidth + barOffset);
+        return i * barWidth;
       })
       .attr('y', 0)
       .text(function (data_in) {
