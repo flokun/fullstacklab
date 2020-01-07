@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use App\Controller\RegionController;
+use App\Controller\PrixSurfaceController;
 
 /**
  * @ApiResource(
@@ -35,7 +36,7 @@ use App\Controller\RegionController;
  *          "priceByMonthYear"={
  *              "method"="get",
  *              "path"="/bien_immobiliers/priceByMonthYear",
- *              "controller"=RegionController::class,
+ *              "controller"=PrixSurfaceController::class,
  *              "pagination_enabled"=false,
  *              "read"=false,
  *              "openapi_context"={
