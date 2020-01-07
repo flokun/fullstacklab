@@ -5,39 +5,32 @@ namespace App\Controller;
 
 
 use App\Repository\BienImmobilierRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
-class BienImmobilierController extends AbstractController
+class RegionController
 {
     const MIN_YEAR = 2015;
     const MAX_YEAR = 2019;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
     /**
      * @var BienImmobilierRepository
      */
     private $bienImmobilierRepository;
 
-    public function __construct(BienImmobilierRepository $bienImmobilierRepository)
+    public function __construct(EntityManagerInterface $manager, BienImmobilierRepository $bienImmobilierRepository)
     {
+        $this->entityManager = $manager;
         $this->bienImmobilierRepository = $bienImmobilierRepository;
     }
 
-    /**
-     * Diagramme circulaire - Récupère le montant des répartitions des ventes par région en %
-     * @Route(
-     *     path="/bien_immobiliers/ventes_regions/{year}",
-     *     name="ventes_regions",
-     *     methods={"GET"},
-     * )
-     * @param Request $request
-     * @param int $year
-     * @return Response
-     */
-    public function getSalesByRegion(Request $request, int $year)
+    public function __invoke(Request $data, int $year)
     {
         if ($year < self::MIN_YEAR || $year > self::MAX_YEAR) {
             return new JsonResponse("La date doit être comprise entre 2015 et 2019", 400);
@@ -143,6 +136,4 @@ class BienImmobilierController extends AbstractController
 
         return new JsonResponse($bienImmobiliersSortedByRegion, 200);
     }
-
-    //TODO: autres routes pour les autres diagrammes
 }
