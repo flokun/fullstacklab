@@ -94,8 +94,8 @@ const Barres = () => {
     let width = 1300 - 2 * margin;
     let height = 600 - 2 * margin;
     let barWidth = width / x.length;
-
-    let max = d3.max(y);
+    let maxLabels = 12;
+    let maxData = d3.max(y);
     let basicColor = '#3c763d';
     let hoverColor = '#3fbb3d';
 
@@ -124,13 +124,13 @@ const Barres = () => {
       .style('stroke-width', 5)
       .attr('width', barWidth)
       .attr('height', function (data_in) {
-        return height - (((max - data_in) / max) * height);
+        return height - (((maxData - data_in) / maxData) * height);
       })
       .attr('x', function (data_in, i) {
         return i * barWidth;
       })
       .attr('y', function (data_in) {
-        return ((max - data_in) / max) * height;
+        return ((maxData - data_in) / maxData) * height;
       })
       .on('mouseover', function (data_in) {
         d3.select(this)
@@ -152,17 +152,16 @@ const Barres = () => {
       .selectAll('div').data(x)
       .enter().append('div')
       .style("background-color", "grey")
+      .style("position", "absolute")
       .style("color", "white")
+      .style("border", "1px solid white")
       .style("margin", "5px")
       .style("padding", "5px")
-      .attr('width', barWidth)
-      .attr('height', function (data_in) {
-        return 20;
-      })
-      .attr('x', function (data_in, i) {
-        return i * barWidth;
-      })
+      .style('max-width', barWidth + "px")
       .attr('y', 0)
+      .style('margin-left', function (data_in, i) {
+        return ((i * barWidth) + 5) + "px";
+      })
       .text(function (data_in) {
         return data_in;
       });
