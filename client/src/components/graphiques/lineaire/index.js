@@ -48,6 +48,13 @@ const Lineaire = () => {
       width = 800 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
     const parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
+
+    var Color = {
+      "MaisonStroke" : "#2471a3",
+      "MaisonFill" : "#2e86c1",
+      "AppartementStroke" : "#1e8449",
+      "AppartementFill" : "#28b463"
+    }
 // append the svg object to the body of the page
     var svg = d3.select("body")
       .append("svg")
@@ -88,25 +95,26 @@ const Lineaire = () => {
 
       // Add Y axis
       var y = d3.scaleLinear()
-        .domain( d3.extent(data, function (d) { return d.Maison;}))
+        .domain( [0,d3.max(data, function (d) { return d.Maison;})])
         .range([ height, 0 ]);
       svg.append("g")
+        .attr("class", "yaxis")
         .call(d3.axisLeft(y));
 
 
 
       // Initialize line with group a
       var line = svg
-        .append('g')
         .append("path")
         .datum(data)
-        .attr("d", d3.line()
-          .x(function(d) { return x(+d.time) })
-          .y(function(d) { return y(+d.Maison) })
+        .attr("d", d3.area()
+          .x(function(d) { return x(d.time) })
+          .y0(y(0))
+          .y1(function(d) { return y(d.Maison) })
         )
-        .attr("stroke", "#3498DB")
-        .style("stroke-width", 4)
-        .style("fill", "none");
+        .attr("fill", Color["MaisonFill"])
+        .attr("stroke", Color["MaisonStroke"])
+        .style("stroke-width", 1.5);
 
       // A function that update the chart
       function update(selectedGroup) {
@@ -114,15 +122,23 @@ const Lineaire = () => {
         // Create new data with the selection?
         var dataFilter = data.map(function(d){return {time: d.time, value:d[selectedGroup]} });
 
+        y.domain( [0,d3.max(dataFilter, function (d) { return d.value;})])
+          .range([ height, 0 ]);
+
+        console.log(y);
+        svg.select(".yaxis")
+          .call(d3.axisLeft(y));
         // Give these new data to update line
         line
           .datum(dataFilter)
-          .transition()
-          .duration(1000)
-          .attr("d", d3.line()
+          .attr("d", d3.area()
             .x(function(d) { return x(d.time) })
-            .y(function(d) { return y(+d.value) })
-          );
+            .y0(y(0))
+            .y1(function(d) { return y(d.value) })
+          )
+          .attr("fill", Color[selectedGroup + "Fill"])
+          .attr("stroke", Color[selectedGroup + "Stroke"])
+          .style("stroke-width", 1.5);
       }
       // When the button is changed, run the updateChart function
       d3.select("#selectButton").on("change", function(d) {
