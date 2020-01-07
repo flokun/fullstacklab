@@ -36,8 +36,9 @@ class BienImmobilierTest extends KernelTestCase
     /** @test */
     public function getBienImmobilier() {
         /** @var BienImmobilier $biensImmobilier */
-        $biensImmobilier = $this->entityManager->getRepository(BienImmobilier::class)->find(1);
-        $this->assertEquals(2, $biensImmobilier->getNumDispo());
+        $biensImmobilier = $this->entityManager->getRepository(BienImmobilier::class)->find(12502651);
+
+        $this->assertEquals(5, $biensImmobilier->getNumDispo());
         $this->assertEquals("2015-01-05", $biensImmobilier->getDateMutation()->format("Y-m-d"));
         $this->assertEquals("Vente", $biensImmobilier->getNatureMutation());
         $this->assertEquals(120, $biensImmobilier->getValeurFonciere());
